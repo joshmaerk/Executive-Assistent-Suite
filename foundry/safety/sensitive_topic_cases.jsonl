@@ -1,0 +1,2 @@
+{"case_id": "sensitive-001", "subject": "HR Thema Mitarbeitergespräch", "expected": {"review_required": true}}
+{"case_id": "sensitive-002", "subject": "Vorstand Entscheidung Compliance", "expected": {"review_required": true}}

@@ -1,0 +1,63 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Executive Morning Briefing",
+      "weight": "Bolder",
+      "size": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "${briefing_summary}",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Kritische Termine",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "${critical_meetings_text}",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Wichtige E-Mails",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "${important_emails_text}",
+      "wrap": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Empfohlene Flags setzen",
+      "data": {
+        "action": "approve_flags"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Drafts erstellen",
+      "data": {
+        "action": "approve_drafts"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Ignorieren",
+      "data": {
+        "action": "ignore"
+      }
+    }
+  ]
+}

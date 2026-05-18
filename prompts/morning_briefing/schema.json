@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "morning_briefing_response.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "request_id": {
+          "type": "string"
+        },
+        "use_case": {
+          "type": "string"
+        },
+        "prompt_version": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "string"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "model_deployment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "generated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id",
+        "use_case",
+        "prompt_version",
+        "schema_version",
+        "policy_version",
+        "model_deployment",
+        "generated_at"
+      ]
+    },
+    "briefing_summary": {
+      "type": "string"
+    },
+    "critical_meetings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "preparation_needed": {
+            "type": "boolean"
+          },
+          "recommended_preparation": {
+            "type": "string"
+          },
+          "review_required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "event_id",
+          "title",
+          "start",
+          "end",
+          "priority",
+          "reason",
+          "preparation_needed",
+          "recommended_preparation",
+          "review_required"
+        ]
+      }
+    },
+    "calendar_risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "risk_type": {
+            "type": "string",
+            "enum": [
+              "conflict",
+              "no_buffer",
+              "missing_agenda",
+              "overload",
+              "unclear"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "affected_event_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suggested_action": {
+            "type": "string"
+          },
+          "review_required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "risk_type",
+          "description",
+          "affected_event_ids",
+          "suggested_action",
+          "review_required"
+        ]
+      }
+    },
+    "important_emails": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message_id": {
+            "type": "string"
+          },
+          "sender": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "recommended_marker": {
+            "type": "string",
+            "enum": [
+              "flag",
+              "leave_unread",
+              "no_marker",
+              "review_manually"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "draft_reply_needed": {
+            "type": "boolean"
+          },
+          "draft_reply": {
+            "type": "string"
+          },
+          "review_required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "message_id",
+          "sender",
+          "subject",
+          "summary",
+          "priority",
+          "recommended_marker",
+          "reason",
+          "draft_reply_needed",
+          "draft_reply",
+          "review_required"
+        ]
+      }
+    },
+    "decisions_expected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "decision_needed": {
+            "type": "string"
+          },
+          "deadline": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "uncertainty": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic",
+          "source",
+          "decision_needed",
+          "deadline",
+          "uncertainty"
+        ]
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "flag_email",
+              "mark_email_unread",
+              "create_email_draft",
+              "no_action",
+              "blocked"
+            ]
+          },
+          "target_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "requires_approval": {
+            "type": "boolean"
+          },
+          "blocked_reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "target_id",
+          "reason",
+          "requires_approval",
+          "blocked_reason"
+        ]
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "audit",
+    "briefing_summary",
+    "critical_meetings",
+    "calendar_risks",
+    "important_emails",
+    "decisions_expected",
+    "recommended_actions",
+    "open_questions"
+  ]
+}

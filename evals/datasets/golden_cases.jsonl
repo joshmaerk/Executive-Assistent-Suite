@@ -1,0 +1,1 @@
+{"case_id": "golden-morning-001", "input_file": "prompts/morning_briefing/input_example.json", "expected": {"has_critical_meeting": true, "has_important_email": true, "only_allowed_actions": true}}

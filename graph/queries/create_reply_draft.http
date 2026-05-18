@@ -1,0 +1,7 @@
+POST https://graph.microsoft.com/v1.0/me/messages/{{message_id}}/createReply
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "comment": "{{draft_comment}}"
+}

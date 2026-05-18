@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "morning_briefing_request.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "request_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "user_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "briefing_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "role",
+        "timezone",
+        "language",
+        "briefing_date"
+      ]
+    },
+    "calendar_events": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allow_send_email": {
+          "type": "boolean"
+        },
+        "allow_update_calendar": {
+          "type": "boolean"
+        },
+        "allow_archive_email": {
+          "type": "boolean"
+        },
+        "allow_create_draft": {
+          "type": "boolean"
+        },
+        "allow_flag_email": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "allow_send_email",
+        "allow_update_calendar",
+        "allow_archive_email",
+        "allow_create_draft",
+        "allow_flag_email"
+      ]
+    }
+  },
+  "required": [
+    "user_context",
+    "calendar_events",
+    "emails",
+    "policy"
+  ]
+}

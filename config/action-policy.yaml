@@ -1,0 +1,63 @@
+policy_version: action_policy.v0.1.0
+
+actions:
+  flag_email:
+    allowed: true
+    requires_approval: true
+  mark_email_unread:
+    allowed: true
+    requires_approval: true
+  create_email_draft:
+    allowed: true
+    requires_approval: true
+  no_action:
+    allowed: true
+    requires_approval: false
+
+  send_email:
+    allowed: false
+    requires_approval: true
+  archive_email:
+    allowed: false
+    requires_approval: true
+  delete_email:
+    allowed: false
+    requires_approval: true
+  update_calendar_event:
+    allowed: false
+    requires_approval: true
+  create_calendar_event:
+    allowed: false
+    requires_approval: true
+  cancel_calendar_event:
+    allowed: false
+    requires_approval: true
+
+sensitive_topics:
+  - hr
+  - personal
+  - compliance
+  - legal
+  - board
+  - vorstand
+  - customer_complaint
+  - kundebeschwerde
+  - audit
+  - revision
+  - regulator
+  - regulatorik
+
+sensitive_topic_behavior:
+  force_review_required: true
+  allow_draft: true
+  allow_auto_action: false
+
+prompt_injection_indicators:
+  - ignore previous instructions
+  - ignore all previous instructions
+  - disregard previous instructions
+  - system prompt
+  - developer message
+  - reveal your instructions
+  - du bist jetzt
+  - ignoriere alle vorherigen anweisungen

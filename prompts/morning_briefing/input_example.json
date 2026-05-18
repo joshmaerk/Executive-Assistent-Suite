@@ -1,0 +1,57 @@
+{
+  "request_id": "demo-001",
+  "user_context": {
+    "role": "bereichsleiter",
+    "timezone": "Europe/Vienna",
+    "language": "de",
+    "briefing_date": "2026-05-18"
+  },
+  "calendar_events": [
+    {
+      "id": "evt-001",
+      "title": "Steuerkreis Vertriebsmanagement",
+      "start": "2026-05-18T09:00:00+02:00",
+      "end": "2026-05-18T10:00:00+02:00",
+      "organizer": {
+        "name": "Max Mustermann",
+        "email": "max.mustermann@example.com"
+      },
+      "attendees": [
+        {
+          "name": "Erika Musterfrau",
+          "email": "erika@example.com"
+        }
+      ],
+      "location": "Teams",
+      "bodyPreview": "Status, Risiken, Entscheidungen",
+      "isOnlineMeeting": true,
+      "importance": "normal",
+      "sensitivity": "normal"
+    }
+  ],
+  "emails": [
+    {
+      "id": "msg-001",
+      "sender": {
+        "name": "Erika Musterfrau",
+        "email": "erika@example.com"
+      },
+      "subject": "Entscheidung für Steuerkreis heute",
+      "receivedDateTime": "2026-05-18T07:30:00+02:00",
+      "importance": "high",
+      "bodyPreview": "Bitte Entscheidung zur Priorisierung vor dem Steuerkreis.",
+      "bodyText": "Bitte Entscheidung zur Priorisierung vor dem Steuerkreis. Keine Anhänge.",
+      "hasAttachments": false,
+      "categories": [],
+      "isRead": false,
+      "flagStatus": "notFlagged"
+    }
+  ],
+  "policy": {
+    "allow_send_email": false,
+    "allow_update_calendar": false,
+    "allow_archive_email": false,
+    "allow_create_draft": true,
+    "allow_flag_email": true
+  }
+}

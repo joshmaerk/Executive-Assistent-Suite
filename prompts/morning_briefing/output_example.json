@@ -1,0 +1,61 @@
+{
+  "audit": {
+    "request_id": "demo-001",
+    "use_case": "EA_MorningBriefing",
+    "prompt_version": "morning_briefing.v0.1.0",
+    "schema_version": "morning_briefing_response.v0.1.0",
+    "policy_version": "action_policy.v0.1.0",
+    "model_deployment": "demo",
+    "generated_at": "2026-05-18T05:45:00Z"
+  },
+  "briefing_summary": "Heute ist der Steuerkreis Vertriebsmanagement der wichtigste Termin; eine Entscheidung zur Priorisierung wird vorab erwartet.",
+  "critical_meetings": [
+    {
+      "event_id": "evt-001",
+      "title": "Steuerkreis Vertriebsmanagement",
+      "start": "2026-05-18T09:00:00+02:00",
+      "end": "2026-05-18T10:00:00+02:00",
+      "priority": "high",
+      "reason": "Termin enthält Entscheidungs- und Steuerungsbezug.",
+      "preparation_needed": true,
+      "recommended_preparation": "E-Mail 'Entscheidung für Steuerkreis heute' prüfen und Entscheidungspunkt vorbereiten.",
+      "review_required": false
+    }
+  ],
+  "calendar_risks": [],
+  "important_emails": [
+    {
+      "message_id": "msg-001",
+      "sender": "erika@example.com",
+      "subject": "Entscheidung für Steuerkreis heute",
+      "summary": "Vor dem Steuerkreis wird eine Priorisierungsentscheidung benötigt.",
+      "priority": "high",
+      "recommended_marker": "flag",
+      "reason": "Direkter Bezug zu heutigem Termin und Entscheidung vor Meetingbeginn.",
+      "draft_reply_needed": true,
+      "draft_reply": "Danke, ich nehme den Punkt für den Steuerkreis auf und bereite die Priorisierung vor.",
+      "review_required": false
+    }
+  ],
+  "decisions_expected": [
+    {
+      "topic": "Priorisierung Steuerkreis",
+      "source": "msg-001",
+      "decision_needed": "Festlegung der Priorisierung vor oder im Steuerkreis.",
+      "deadline": "2026-05-18T09:00:00+02:00",
+      "uncertainty": "Konkrete Entscheidungsoptionen sind im Input nicht enthalten."
+    }
+  ],
+  "recommended_actions": [
+    {
+      "type": "flag_email",
+      "target_id": "msg-001",
+      "reason": "E-Mail ist für heutigen Termin entscheidungsrelevant.",
+      "requires_approval": true,
+      "blocked_reason": null
+    }
+  ],
+  "open_questions": [
+    "Welche Priorisierungsoptionen stehen zur Entscheidung?"
+  ]
+}
