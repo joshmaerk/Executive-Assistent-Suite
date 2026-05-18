@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'imports/m365-executive-assistant-repo-skeleton.zip.b64'
-      - 'imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*'
+      - 'imports/READY'
 
 permissions:
   contents: write
@@ -16,6 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Verify import marker
+        run: |
+          set -euo pipefail
+          test -f imports/READY
 
       - name: Assemble, decode and unpack skeleton
         run: |
@@ -36,6 +40,7 @@ jobs:
 
       - name: Remove import payload after successful extraction
         run: |
+          rm -f imports/READY
           rm -f imports/m365-executive-assistant-repo-skeleton.zip.b64
           rm -f imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*
           rmdir imports 2>/dev/null || true
