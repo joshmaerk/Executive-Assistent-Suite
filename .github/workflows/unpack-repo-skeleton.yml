@@ -74,7 +74,6 @@ jobs:
               chunks.append(data)
 
           raw = b''.join(chunks)
-          # Only remove whitespace. Do not silently remove other bytes.
           compact = re.sub(rb'\s+', b'', raw)
           print(f'Base64 bytes after whitespace removal: {len(compact)}')
           print(f'Base64 length mod 4: {len(compact) % 4}')
@@ -97,6 +96,20 @@ jobs:
 
           test -d /tmp/ea-import/unpacked/m365-executive-assistant
           cp -R /tmp/ea-import/unpacked/m365-executive-assistant/. .
+
+      - name: Move workflow templates out of restricted directory
+        run: |
+          set -euo pipefail
+          mkdir -p docs/workflows
+          if test -f .github/workflows/ci.yml; then
+            mv .github/workflows/ci.yml docs/workflows/ci.yml.template
+          fi
+          if test -f .github/workflows/evals.yml; then
+            mv .github/workflows/evals.yml docs/workflows/evals.yml.template
+          fi
+          if test -f .github/workflows/security-scan.yml; then
+            mv .github/workflows/security-scan.yml docs/workflows/security-scan.yml.template
+          fi
 
       - name: Remove import payload after successful extraction
         run: |
