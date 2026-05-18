@@ -26,20 +26,72 @@ jobs:
           set -euo pipefail
           mkdir -p /tmp/ea-import/unpacked
 
-          if compgen -G "imports/m365-executive-assistant-repo-skeleton.tar.xz.b64.part-*" > /dev/null; then
-            cat imports/m365-executive-assistant-repo-skeleton.tar.xz.b64.part-* > /tmp/ea-import/skeleton.tar.xz.b64
-            base64 -d /tmp/ea-import/skeleton.tar.xz.b64 > /tmp/ea-import/skeleton.tar.xz
+          python - <<'PY'
+          import base64
+          import glob
+          import pathlib
+          import re
+          import sys
+
+          imports = pathlib.Path('imports')
+          work = pathlib.Path('/tmp/ea-import')
+          work.mkdir(parents=True, exist_ok=True)
+
+          tar_parts = sorted(glob.glob('imports/m365-executive-assistant-repo-skeleton.tar.xz.b64.part-*'))
+          zip_parts = sorted(glob.glob('imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*'))
+
+          if tar_parts:
+              target = work / 'skeleton.tar.xz'
+              parts = tar_parts
+              mode = 'tar.xz'
+          elif (imports / 'm365-executive-assistant-repo-skeleton.tar.xz.b64').exists():
+              target = work / 'skeleton.tar.xz'
+              parts = [str(imports / 'm365-executive-assistant-repo-skeleton.tar.xz.b64')]
+              mode = 'tar.xz'
+          elif zip_parts:
+              target = work / 'skeleton.zip'
+              parts = zip_parts
+              mode = 'zip'
+          elif (imports / 'm365-executive-assistant-repo-skeleton.zip.b64').exists():
+              target = work / 'skeleton.zip'
+              parts = [str(imports / 'm365-executive-assistant-repo-skeleton.zip.b64')]
+              mode = 'zip'
+          else:
+              raise SystemExit('No import payload found.')
+
+          print(f'Import mode: {mode}')
+          print(f'Part count: {len(parts)}')
+
+          allowed = set(b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\r\n\t ')
+          chunks = []
+          for part in parts:
+              data = pathlib.Path(part).read_bytes()
+              invalid = sorted(set(data) - allowed)
+              print(f'{part}: {len(data)} bytes')
+              if invalid:
+                  print(f'Invalid bytes in {part}: {invalid}', file=sys.stderr)
+                  raise SystemExit(2)
+              chunks.append(data)
+
+          raw = b''.join(chunks)
+          # Only remove whitespace. Do not silently remove other bytes.
+          compact = re.sub(rb'\s+', b'', raw)
+          print(f'Base64 bytes after whitespace removal: {len(compact)}')
+          print(f'Base64 length mod 4: {len(compact) % 4}')
+
+          try:
+              decoded = base64.b64decode(compact, validate=True)
+          except Exception as exc:
+              print(f'Base64 decode failed: {exc}', file=sys.stderr)
+              raise SystemExit(3)
+
+          target.write_bytes(decoded)
+          print(f'Wrote {target}: {len(decoded)} bytes')
+          PY
+
+          if test -f /tmp/ea-import/skeleton.tar.xz; then
             tar -xJf /tmp/ea-import/skeleton.tar.xz -C /tmp/ea-import/unpacked
-          elif test -f imports/m365-executive-assistant-repo-skeleton.tar.xz.b64; then
-            base64 -d imports/m365-executive-assistant-repo-skeleton.tar.xz.b64 > /tmp/ea-import/skeleton.tar.xz
-            tar -xJf /tmp/ea-import/skeleton.tar.xz -C /tmp/ea-import/unpacked
-          elif compgen -G "imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*" > /dev/null; then
-            cat imports/m365-executive-assistant-repo-skeleton.zip.b64.part-* > /tmp/ea-import/skeleton.zip.b64
-            base64 -d /tmp/ea-import/skeleton.zip.b64 > /tmp/ea-import/skeleton.zip
-            unzip -q -o /tmp/ea-import/skeleton.zip -d /tmp/ea-import/unpacked
           else
-            test -f imports/m365-executive-assistant-repo-skeleton.zip.b64
-            base64 -d imports/m365-executive-assistant-repo-skeleton.zip.b64 > /tmp/ea-import/skeleton.zip
             unzip -q -o /tmp/ea-import/skeleton.zip -d /tmp/ea-import/unpacked
           fi
 
