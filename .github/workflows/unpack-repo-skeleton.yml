@@ -1,0 +1,45 @@
+name: Unpack repository skeleton
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'imports/m365-executive-assistant-repo-skeleton.zip.b64'
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Decode and unpack skeleton
+        run: |
+          set -euo pipefail
+          test -f imports/m365-executive-assistant-repo-skeleton.zip.b64
+          mkdir -p /tmp/ea-import
+          base64 -d imports/m365-executive-assistant-repo-skeleton.zip.b64 > /tmp/ea-import/skeleton.zip
+          unzip -q -o /tmp/ea-import/skeleton.zip -d /tmp/ea-import/unpacked
+          test -d /tmp/ea-import/unpacked/m365-executive-assistant
+          cp -R /tmp/ea-import/unpacked/m365-executive-assistant/. .
+
+      - name: Remove import payload after successful extraction
+        run: |
+          rm -f imports/m365-executive-assistant-repo-skeleton.zip.b64
+          rmdir imports 2>/dev/null || true
+
+      - name: Commit unpacked skeleton
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Unpack M365 Executive Assistant repository skeleton"
+            git push
+          fi
