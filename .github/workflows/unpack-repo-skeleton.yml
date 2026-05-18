@@ -24,17 +24,25 @@ jobs:
       - name: Assemble, decode and unpack skeleton
         run: |
           set -euo pipefail
-          mkdir -p /tmp/ea-import
+          mkdir -p /tmp/ea-import/unpacked
 
-          if compgen -G "imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*" > /dev/null; then
+          if compgen -G "imports/m365-executive-assistant-repo-skeleton.tar.xz.b64.part-*" > /dev/null; then
+            cat imports/m365-executive-assistant-repo-skeleton.tar.xz.b64.part-* > /tmp/ea-import/skeleton.tar.xz.b64
+            base64 -d /tmp/ea-import/skeleton.tar.xz.b64 > /tmp/ea-import/skeleton.tar.xz
+            tar -xJf /tmp/ea-import/skeleton.tar.xz -C /tmp/ea-import/unpacked
+          elif test -f imports/m365-executive-assistant-repo-skeleton.tar.xz.b64; then
+            base64 -d imports/m365-executive-assistant-repo-skeleton.tar.xz.b64 > /tmp/ea-import/skeleton.tar.xz
+            tar -xJf /tmp/ea-import/skeleton.tar.xz -C /tmp/ea-import/unpacked
+          elif compgen -G "imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*" > /dev/null; then
             cat imports/m365-executive-assistant-repo-skeleton.zip.b64.part-* > /tmp/ea-import/skeleton.zip.b64
+            base64 -d /tmp/ea-import/skeleton.zip.b64 > /tmp/ea-import/skeleton.zip
+            unzip -q -o /tmp/ea-import/skeleton.zip -d /tmp/ea-import/unpacked
           else
             test -f imports/m365-executive-assistant-repo-skeleton.zip.b64
-            cp imports/m365-executive-assistant-repo-skeleton.zip.b64 /tmp/ea-import/skeleton.zip.b64
+            base64 -d imports/m365-executive-assistant-repo-skeleton.zip.b64 > /tmp/ea-import/skeleton.zip
+            unzip -q -o /tmp/ea-import/skeleton.zip -d /tmp/ea-import/unpacked
           fi
 
-          base64 -d /tmp/ea-import/skeleton.zip.b64 > /tmp/ea-import/skeleton.zip
-          unzip -q -o /tmp/ea-import/skeleton.zip -d /tmp/ea-import/unpacked
           test -d /tmp/ea-import/unpacked/m365-executive-assistant
           cp -R /tmp/ea-import/unpacked/m365-executive-assistant/. .
 
@@ -43,6 +51,8 @@ jobs:
           rm -f imports/READY
           rm -f imports/m365-executive-assistant-repo-skeleton.zip.b64
           rm -f imports/m365-executive-assistant-repo-skeleton.zip.b64.part-*
+          rm -f imports/m365-executive-assistant-repo-skeleton.tar.xz.b64
+          rm -f imports/m365-executive-assistant-repo-skeleton.tar.xz.b64.part-*
           rmdir imports 2>/dev/null || true
 
       - name: Commit unpacked skeleton
