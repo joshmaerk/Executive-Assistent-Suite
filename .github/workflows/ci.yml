@@ -33,8 +33,5 @@ jobs:
       - name: Test
         run: pytest
 
-      # TODO: continue-on-error entfernen, sobald `mypy src` dauerhaft grün ist
-      # (siehe specs/agent-governance/02-implementation-roadmap.md, P0).
       - name: Typecheck
         run: mypy src
-        continue-on-error: true

@@ -13,10 +13,10 @@ Die laufende Abarbeitung übernimmt der autonome Task-Runner
 
 - [ ] **CI aktiv halten** — `.github/workflows/ci.yml` läuft bei `pull_request`
       und `push` auf `main`. Nach erstem Lauf prüfen, dass alle Schritte grün sind.
-- [ ] **mypy als echtes Gate** — `[tool.mypy]` ist in `pyproject.toml` konfiguriert;
-      Dev-Stubs (`types-jsonschema`, `types-PyYAML`) ergänzt. Solange `mypy src`
-      nicht dauerhaft grün ist, läuft der CI-Schritt `continue-on-error: true`.
-      Ziel: Restfehler beheben, dann `continue-on-error` entfernen.
+- [x] **mypy als echtes Gate** — `[tool.mypy]` ist in `pyproject.toml` konfiguriert;
+      Dev-Stubs (`types-jsonschema`, `types-PyYAML`) ergänzt. Die Typfehler im
+      Azure-OpenAI-Client wurden behoben, `continue-on-error` aus dem CI-Schritt
+      entfernt — `mypy src` ist jetzt ein blockierendes Gate.
 - [ ] **Branch Protection für `main`** — CI als Required Check setzen (Repo-Setting,
       manuell durch Maintainer). Pflicht für den autonomen Workflow.
 - [ ] **Autonomen Workflow scharf schalten** — GitHub-App, Azure/Foundry-OIDC +
