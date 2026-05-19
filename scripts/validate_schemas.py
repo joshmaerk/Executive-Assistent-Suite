@@ -16,7 +16,9 @@ def main() -> None:
     for path in list((ROOT / "schemas").rglob("*.json")) + list((ROOT / "prompts").rglob("*.json")):
         validate_json_file(path)
 
-    schema = json.loads((ROOT / "schemas/responses/morning_briefing_response.schema.json").read_text())
+    schema = json.loads(
+        (ROOT / "schemas/responses/morning_briefing_response.schema.json").read_text()
+    )
     example = json.loads((ROOT / "prompts/morning_briefing/output_example.json").read_text())
     errors = list(Draft202012Validator(schema).iter_errors(example))
     if errors:

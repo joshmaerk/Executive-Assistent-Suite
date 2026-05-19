@@ -1,7 +1,10 @@
 from datetime import datetime, timezone
 
 from ea_assistant.models.morning_briefing import AuditMetadata, MorningBriefingResponse
-from ea_assistant.services.policy_engine import enforce_action_policy, contains_prompt_injection_indicator
+from ea_assistant.services.policy_engine import (
+    enforce_action_policy,
+    contains_prompt_injection_indicator,
+)
 
 
 def base_response(action_type: str) -> MorningBriefingResponse:

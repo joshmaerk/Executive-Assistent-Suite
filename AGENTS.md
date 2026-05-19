@@ -92,6 +92,44 @@ Der MVP ist fertig, wenn:
 - Keine pauschalen `except Exception: pass`.
 - Keine Annahmen über Tenant-spezifische IDs.
 
+## Commands
+
+```bash
+pip install -e ".[dev]"                  # Install (oder: make install)
+uvicorn ea_assistant.main:app --reload   # API lokal (oder: make run)
+pytest                                   # Tests (oder: make test)
+ruff format --check . && ruff check .    # Format-Check + Lint
+mypy src                                 # Typecheck
+python scripts/validate_schemas.py       # Schemas + Beispiele (oder: make validate)
+```
+
+Vor jedem Commit müssen `ruff format --check .`, `ruff check .`, `pytest` und
+`python scripts/validate_schemas.py` grün sein.
+
+## Commit- & PR-Regeln
+
+- Kleine, thematisch fokussierte Commits; Messages im Imperativ.
+- Keine destruktiven Git-Operationen ohne ausdrückliche Aufforderung.
+- Keine neuen Dependencies ohne Begründung im PR (Ausnahme: dev-only Type-Stubs).
+- PRs nutzen `.github/pull_request_template.md` inkl. Agent- und Safety-Checklist.
+- Keine Secrets und keine echten personenbezogenen Daten im Diff.
+
+## Definition of Done für Agentenarbeit
+
+1. Alle Quality Gates lokal grün (`mypy`: grün oder dokumentiertes TODO).
+2. Für Verhaltensänderungen existieren belegende Tests.
+3. Schemas und Beispiele sind konsistent.
+4. Keine verbotenen Aktionen ermöglicht; keine Secrets / echten Personendaten.
+5. Betroffene Doku (`README.md`, `CLAUDE.md`, Specs) ist aktuell.
+6. Nur spezifizierte Features umgesetzt; Diff selbst reviewt.
+
+## Weiterführend
+
+- `CLAUDE.md` — projektspezifischer Claude-Code-Kontext.
+- `.claude/skills/` — Workflows `systematic-debugging`, `test-driven-change`,
+  `repo-maintenance` (auch für Codex/Cursor/Copilot als Referenz nutzbar).
+- `specs/agent-governance/` — Repo-Assessment, AI-Coding-Guardrails, Roadmap.
+
 ## Wichtig
 
 Baue kein Agenten-Framework, bevor der Morning-Briefing-MVP stabil ist. Erst stabiler API-MVP, dann weitere Use Cases.

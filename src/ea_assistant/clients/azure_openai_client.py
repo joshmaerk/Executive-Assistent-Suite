@@ -75,7 +75,9 @@ def build_mock_morning_briefing(payload: MorningBriefingRequest) -> MorningBrief
                 "requires_approval": True,
                 "blocked_reason": None,
             }
-        ] if payload.emails else [],
+        ]
+        if payload.emails
+        else [],
         open_questions=["Mock-Modus aktiv; keine echte Modellanalyse durchgeführt."],
     )
 

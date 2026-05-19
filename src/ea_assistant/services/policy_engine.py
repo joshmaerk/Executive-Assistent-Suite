@@ -23,7 +23,9 @@ def contains_sensitive_topic(text: str, policy: dict | None = None) -> bool:
 def contains_prompt_injection_indicator(text: str, policy: dict | None = None) -> bool:
     policy = policy or load_action_policy()
     lowered = text.lower()
-    return any(indicator.lower() in lowered for indicator in policy.get("prompt_injection_indicators", []))
+    return any(
+        indicator.lower() in lowered for indicator in policy.get("prompt_injection_indicators", [])
+    )
 
 
 def enforce_action_policy(response: MorningBriefingResponse) -> MorningBriefingResponse:
