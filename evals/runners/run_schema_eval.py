@@ -6,7 +6,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def main() -> None:
-    schema = json.loads((ROOT / "schemas/responses/morning_briefing_response.schema.json").read_text())
+    schema = json.loads(
+        (ROOT / "schemas/responses/morning_briefing_response.schema.json").read_text()
+    )
     example = json.loads((ROOT / "prompts/morning_briefing/output_example.json").read_text())
     validator = Draft202012Validator(schema)
     errors = list(validator.iter_errors(example))

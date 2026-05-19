@@ -20,7 +20,9 @@ dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
     "ruff>=0.4",
-    "mypy>=1.9"
+    "mypy>=1.9",
+    "types-jsonschema>=4.21",
+    "types-PyYAML>=6.0"
 ]
 
 [tool.pytest.ini_options]
@@ -29,3 +31,11 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+mypy_path = "src"
+explicit_package_bases = true
+ignore_missing_imports = true
+warn_unused_ignores = true

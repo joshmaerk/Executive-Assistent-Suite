@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Autonomer Agenten-Workflow
+    url: https://github.com/joshmaerk/Executive-Assistent-Suite/blob/main/specs/agent-governance/03-autonomous-agent-workflow.md
+    about: Wie der autonome Task-Runner Issues auswählt und abarbeitet.
+  - name: AI Coding Guardrails
+    url: https://github.com/joshmaerk/Executive-Assistent-Suite/blob/main/specs/agent-governance/01-ai-coding-guardrails.md
+    about: Verbindliche Regeln und Definition of Done für Agentenarbeit.
