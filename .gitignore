@@ -7,6 +7,7 @@ __pycache__/
 .ruff_cache/
 dist/
 build/
+*.egg-info/
 .coverage
 htmlcov/
 local.settings.json
