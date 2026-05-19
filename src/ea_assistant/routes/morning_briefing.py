@@ -12,7 +12,7 @@ router = APIRouter()
 def create_morning_briefing(payload: MorningBriefingRequest) -> MorningBriefingResponse:
     try:
         response = call_morning_briefing_model(payload)
-        response = enforce_action_policy(response)
+        response = enforce_action_policy(response, payload)
 
         errors = validate_json_schema(
             response.model_dump(mode="json"),

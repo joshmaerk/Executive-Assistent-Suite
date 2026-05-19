@@ -27,6 +27,8 @@ Die laufende Abarbeitung übernimmt der autonome Task-Runner
 
 - [ ] **Safety-Tests ergänzen** (NFR-004) — Tests für Prompt-Injection-Flagging und
       Sensitive-Topic-Detection auf Basis von `foundry/safety/*.jsonl`.
+      Prompt-Injection-Flagging ist umgesetzt (`tests/test_prompt_injection.py`,
+      `contains_untrusted_injection`); Sensitive-Topic-Detection offen (WQ-003).
 - [ ] **Eval-Suite in CI** — `evals/runners/run_schema_eval.py` gegen
       `evals/datasets/golden_cases.jsonl` als (zunächst non-blocking) CI-Job.
 - [ ] **Coverage-Messung** — `pytest --cov` einführen, Mindestschwelle definieren.
