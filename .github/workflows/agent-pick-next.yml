@@ -1,0 +1,68 @@
+name: agent-pick-next
+
+# Autonomer Task-Runner: zieht das oberste freigegebene Issue aus der Work Queue
+# und arbeitet es einmal ab (Plan -> Implementierung -> Tests -> PR).
+# Logik: specs/agent-governance/03-autonomous-agent-workflow.md (Rolle pick-next).
+
+on:
+  schedule:
+    # Werktags 06:00 UTC, ein Task pro Lauf. Kadenz nach Bedarf anpassen.
+    - cron: "0 6 * * 1-5"
+  workflow_dispatch:
+  issues:
+    types: [labeled]
+
+# Nie zwei autonome Laeufe gleichzeitig.
+concurrency:
+  group: agent-pick-next
+  cancel-in-progress: false
+
+jobs:
+  pick-next:
+    # Bei issues.labeled nur starten, wenn das Label "agent-ready" gesetzt wurde.
+    if: >-
+      github.event_name != 'issues' ||
+      github.event.label.name == 'agent-ready'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # TODO: use_foundry / ANTHROPIC_FOUNDRY_BASE_URL und --model gegen die
+      # gepinnte Version von anthropics/claude-code-action verifizieren.
+      - name: Run autonomous task runner
+        uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_FOUNDRY_BASE_URL: ${{ vars.ANTHROPIC_FOUNDRY_BASE_URL }}
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+          use_foundry: "true"
+          claude_args: "--model claude-sonnet-4-5 --max-turns 40"
+          prompt: >-
+            Du bist der autonome AI-Coding-Task-Runner dieses Repos.
+            Folge exakt der Datei specs/agent-governance/03-autonomous-agent-workflow.md,
+            Rolle "pick-next". Beachte AGENTS.md, CLAUDE.md und
+            specs/agent-governance/01-ai-coding-guardrails.md. Bearbeite genau ein
+            Issue, oeffne einen Pull Request und merge nichts.

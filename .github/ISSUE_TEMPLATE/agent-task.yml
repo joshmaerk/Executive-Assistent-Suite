@@ -1,0 +1,72 @@
+name: Agent Task
+description: Eine agentenfähige Aufgabe für den autonomen AI-Coding-Workflow
+title: "[Task] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Aufgabe für den autonomen Task-Runner. Der Agent übernimmt dieses Issue
+        erst, wenn ein Mensch das Label `agent-ready` setzt. Logik:
+        `specs/agent-governance/03-autonomous-agent-workflow.md`.
+  - type: textarea
+    id: context
+    attributes:
+      label: Kontext / Ziel
+      description: Warum wird das gebraucht, was soll am Ende erreicht sein?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Akzeptanzkriterien
+      description: Konkrete, prüfbare Bedingungen für „fertig".
+      placeholder: |
+        - [ ] ...
+        - [ ] Alle Quality Gates grün
+    validations:
+      required: true
+  - type: textarea
+    id: in-scope
+    attributes:
+      label: Dateien / Bereiche im Scope
+      description: Welche Pfade darf der Agent anfassen?
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Außerhalb des Scope
+      description: Was ausdrücklich nicht geändert werden soll.
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorität
+      options:
+        - "P0 - sofort"
+        - "P1 - als Nächstes"
+        - "P2 - später"
+    validations:
+      required: true
+  - type: dropdown
+    id: epic
+    attributes:
+      label: Epic
+      options:
+        - morning-briefing
+        - governance
+        - quality
+    validations:
+      required: true
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of Done
+      description: Verbindlich gemäß specs/agent-governance/01-ai-coding-guardrails.md
+      options:
+        - label: Quality Gates grün, Verhaltensänderungen durch Tests belegt
+          required: true
+        - label: Keine Secrets, keine echten personenbezogenen Daten, keine verbotenen Aktionen
+          required: true

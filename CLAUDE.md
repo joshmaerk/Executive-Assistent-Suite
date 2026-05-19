@@ -53,3 +53,5 @@ Vor jedem Commit: `ruff format --check .`, `ruff check .`, `pytest`,
 - `AGENTS.md` — verbindliche agentenübergreifende Regeln
 - `specs/AI_AGENT_BUILD_SPEC.md` — Build-Spezifikation des MVP
 - `specs/agent-governance/` — Repo-Assessment, AI-Coding-Guardrails, Roadmap
+- `specs/agent-governance/03-autonomous-agent-workflow.md` — autonomer
+  Task-Runner (Queue, Trigger, Loop)

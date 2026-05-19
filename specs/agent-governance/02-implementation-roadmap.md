@@ -5,6 +5,10 @@ Bezieht sich auf `00-repo-assessment.md`. Produkt-Roadmap des MVP: `specs/07_bac
 
 Priorisierung: **P0** = sofort, **P1** = als Nächstes, **P2** = später.
 
+Die laufende Abarbeitung übernimmt der autonome Task-Runner
+(`03-autonomous-agent-workflow.md`); die konkreten Tasks stehen in
+`04-initial-task-queue.md` und als GitHub Issues.
+
 ## P0 — sofort
 
 - [ ] **CI aktiv halten** — `.github/workflows/ci.yml` läuft bei `pull_request`
@@ -14,7 +18,10 @@ Priorisierung: **P0** = sofort, **P1** = als Nächstes, **P2** = später.
       nicht dauerhaft grün ist, läuft der CI-Schritt `continue-on-error: true`.
       Ziel: Restfehler beheben, dann `continue-on-error` entfernen.
 - [ ] **Branch Protection für `main`** — CI als Required Check setzen (Repo-Setting,
-      manuell durch Maintainer).
+      manuell durch Maintainer). Pflicht für den autonomen Workflow.
+- [ ] **Autonomen Workflow scharf schalten** — GitHub-App, Azure/Foundry-OIDC +
+      Secrets gemäß `03-autonomous-agent-workflow.md` einrichten; Trockenlauf via
+      `workflow_dispatch`.
 
 ## P1 — als Nächstes
 

@@ -123,12 +123,20 @@ Vor jedem Commit müssen `ruff format --check .`, `ruff check .`, `pytest` und
 5. Betroffene Doku (`README.md`, `CLAUDE.md`, Specs) ist aktuell.
 6. Nur spezifizierte Features umgesetzt; Diff selbst reviewt.
 
+## Autonomer Agenten-Workflow
+
+Aufgaben werden als GitHub Issues geführt. Ein autonomer Task-Runner zieht das
+oberste mit `agent-ready` freigegebene Issue, plant, implementiert test-first,
+prüft die Quality Gates und öffnet einen Pull Request — ein Mensch merged.
+Verbindliche Loop-Logik: `specs/agent-governance/03-autonomous-agent-workflow.md`.
+
 ## Weiterführend
 
 - `CLAUDE.md` — projektspezifischer Claude-Code-Kontext.
 - `.claude/skills/` — Workflows `systematic-debugging`, `test-driven-change`,
   `repo-maintenance` (auch für Codex/Cursor/Copilot als Referenz nutzbar).
-- `specs/agent-governance/` — Repo-Assessment, AI-Coding-Guardrails, Roadmap.
+- `specs/agent-governance/` — Repo-Assessment, AI-Coding-Guardrails, autonomer
+  Workflow, Task-Queue, Roadmap.
 
 ## Wichtig
 
