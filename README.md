@@ -85,3 +85,12 @@ Die zentrale Spezifikation für KI-Coding-Agenten liegt in:
 AGENTS.md
 specs/AI_AGENT_BUILD_SPEC.md
 ```
+
+## Setup & autonomer Workflow
+
+Schritt-für-Schritt-Anleitung, um das Projekt in einer GitHub-Instanz scharf zu
+schalten (lokale Umgebung, CI, autonomer AI-Coding-Workflow):
+
+```text
+docs/SETUP.md
+```
